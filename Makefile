@@ -1,5 +1,4 @@
 OBJECTS = *.o
-BINAIRE = wolf3d
 SRC = libft/*.c\
 		src/main.c\
 		src/draw.c\
@@ -9,22 +8,20 @@ SRC = libft/*.c\
 		src/keys.c
 
 FLAGS = -Wall -Wextra -Werror 
-NAME = wolf3d.a
+NAME = wolf3d
 
 all: $(NAME)
 
 $(NAME):
-	gcc $(FLAGS) -c $(SRC) -I header/wolf3d.h
-	ar rc $(NAME) $(OBJECTS)
-	ranlib $(NAME)
 	make -C mlx/
-	gcc $(FLAGS) src/main.c -o $(BINAIRE) $(NAME) -I mlx mlx/libmlx.a -framework OpenGL -framework AppKit
+	make -C libft/
+	gcc $(FLAGS) $(SRC) -o $(NAME) -I mlx mlx/libmlx.a -framework OpenGL -framework AppKit
 
 sanitize:
 	gcc $(FLAGS) src/main.c -o $(BINAIRE) $(NAME) -I mlx mlx/libmlx.a -framework OpenGL -framework AppKit -g
 
 lldb:
-	gcc -g $(SRC) $(NAME) -I mlx mlx/libmlx.a -framework OpenGL -framework AppKit
+	gcc -g $(SRC) -I mlx mlx/libmlx.a -framework OpenGL -framework AppKit
 
 cleanlldb:
 	rm a.out

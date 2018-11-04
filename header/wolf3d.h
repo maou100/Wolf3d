@@ -6,7 +6,7 @@
 /*   By: amagnan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/02 03:57:59 by amagnan           #+#    #+#             */
-/*   Updated: 2018/11/02 03:58:01 by amagnan          ###   ########.fr       */
+/*   Updated: 2018/11/03 13:44:31 by feedme           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef	struct				s_player
 	t_vector				position;
 	t_vector				direction;
 	t_vector				projection_plane;
+	double					sprint;
 }							t_player;
 
 typedef	struct				s_map
@@ -75,6 +76,7 @@ typedef	struct 				s_move
 	int 					right;
 	int 					rotate_right;
 	int 					rotate_left;
+	char	*tmp;
 }							t_move;
 
 typedef	struct				s_variables
@@ -113,13 +115,14 @@ typedef	struct				s_variables
 # define KEY_RIGHT			124
 # define KEY_UP				126
 # define KEY_DEL			117
+# define LEFT_SHIFT			257
 
 void						put_pixel(unsigned char *pixel, t_color color);
 void						put_column(t_variables **data, int x, double size, t_color color);
 int							keyboard(int key, void *param);
 void						start_modelization(t_variables *data);
 void						wolf(t_variables *data);
-t_map						get_map(char *path);
+t_map						get_map(char *path, char *tmp);
 void						init_player(t_variables *data);
 void						angle(t_vector *d, t_vector *pp, int key);
 int							change_pos(t_variables *data);
@@ -132,5 +135,9 @@ void						init_variables(t_variables **data, int x);
 int 						key_release(int key, void *param);
 int 						key_press(int key, void *param);
 int 						key_exit(void);
+void						strafe(t_variables *data);
+void						forward_back(t_variables *data);
+int							check_error(char **map, int count, int x);
+void						check_middle(char **map, int count, int x);
 
 #endif
